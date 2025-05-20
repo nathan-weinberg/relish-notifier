@@ -76,7 +76,6 @@ def main():
 
     # check status
     while True:
-        sleep(5)
         status = checkOrderStatus(br)
         print(f"CURRENT RELISH STATUS REPORTS AS: '{status}'")
         if status == ARRIVED_STATUS:
@@ -84,6 +83,7 @@ def main():
             #send_slack()
             break
         br.refresh()
+        sleep(30)
 
     # exit
     sys.exit(0)

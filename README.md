@@ -1,6 +1,6 @@
 # relish-notifier
 
-A Python app using Selenium that tells me when Relish is here without having to download another app or give them my phone number or whatever
+A Python app using Selenium that tells me when Relish is here without having to download another app or give them my phone number or whatever.
 
 ## Relish credentials
 
@@ -14,4 +14,4 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> keyring.set_password("relish-notifier", "EMAIL", "<your email>")
 >>> keyring.set_password("relish-notifier", "PASSWORD", "<your password>")
 >>> exit()
-`
+```

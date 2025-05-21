@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
@@ -52,6 +53,21 @@ def checkOrderStatus(br) -> str:
     return status 
 
 
+def checkLunchTime() -> str:
+    ''' checks if it's lunch time or nah
+          early lunch time is defined as before 11:30am
+          on-time lunch time is defined as anywhere between 11:30am and Noon
+          late lunch time is defined as anytime after Noon
+    '''
+    now = datetime.now()
+    if (now.hour < 11) or (now.hour == 11 and now.minute < 30):
+        return "EARLY"
+    elif (now.hour >= 12):
+        return "LATE"
+    else:
+        return "ON-TIME"
+
+
 def main():
 
     # initialize webdriver
@@ -85,6 +101,16 @@ def main():
     print("Begin lunch status checking...")
     try:
         while True:
+            lunchTime = checkLunchTime()
+            if lunchTime == "EARLY":
+                print("Checking Relish, but it's a little early for lunch... someone is hungry!")
+            elif lunchTime == "LATE":
+                print("Checking Relish, but it's a little late for lunch... might wanna talk to Shawn!")
+            elif lunchTime == "ON-TIME":
+                continue
+            else:
+                raise Exception("UNRECOGNIZED LUNCH TIME - PLEASE ENSURE THE SPACE-TIME CONTINUUM IS INTACT")
+
             status = checkOrderStatus(br)
             print(f"CURRENT RELISH STATUS REPORTS AS: '{status}'")
             if status == ARRIVED_STATUS:

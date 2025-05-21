@@ -12,7 +12,7 @@ import keyring
 
 STATUS_CHECK_SECONDS = 30
 PLACED_STATUS = "Order Placed"
-PREPARING_STATUS = ""
+PREPARING_STATUS = "Preparing Your Order"
 ARRIVED_STATUS = "Order Arrived"
 
 

@@ -10,6 +10,9 @@ from selenium.common.exceptions import WebDriverException
 from selenium_stealth import stealth
 import keyring
 
+STATUS_CHECK_SECONDS = 30
+PLACED_STATUS = "Order Placed"
+PREPARING_STATUS = ""
 ARRIVED_STATUS = "Order Arrived"
 
 
@@ -44,15 +47,19 @@ def checkOrderStatus(br) -> str:
     '''
     label = WebDriverWait(br, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "schedule-card-label")))
     status = label.text
+    if status not in [PLACED_STATUS, PREPARING_STATUS, ARRIVED_STATUS]:
+        print(f"Got unexpected status: {status}")
     return status 
 
 
 def main():
 
     # initialize webdriver
+    print("Initializing webdriver...")
     br = initializeWebDriver()
 
     # relish login
+    print("Logging into Relish...")
     br.get("https://relish.ezcater.com/schedule")
     sleep(5)
 
@@ -75,15 +82,20 @@ def main():
     br.get("https://relish.ezcater.com/schedule")
 
     # check status
-    while True:
-        status = checkOrderStatus(br)
-        print(f"CURRENT RELISH STATUS REPORTS AS: '{status}'")
-        if status == ARRIVED_STATUS:
-            print("Order has arrived!")
-            #send_slack()
-            break
-        br.refresh()
-        sleep(30)
+    print("Begin lunch status checking...")
+    try:
+        while True:
+            status = checkOrderStatus(br)
+            print(f"CURRENT RELISH STATUS REPORTS AS: '{status}'")
+            if status == ARRIVED_STATUS:
+                print("Order has arrived!")
+                #send_slack()
+                break
+            print(f"Checking again in {STATUS_CHECK_SECONDS} seconds...")
+            br.refresh()
+            sleep(STATUS_CHECK_SECONDS)
+    except KeyboardInterrupt:
+        pass
 
     # exit
     sys.exit(0)

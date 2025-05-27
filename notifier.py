@@ -107,7 +107,7 @@ def main():
             elif lunchTime == "LATE":
                 print("Checking Relish, but it's a little late for lunch... might wanna talk to Shawn!")
             elif lunchTime == "ON-TIME":
-                continue
+                pass
             else:
                 raise Exception("UNRECOGNIZED LUNCH TIME - PLEASE ENSURE THE SPACE-TIME CONTINUUM IS INTACT")
 

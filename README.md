@@ -1,10 +1,35 @@
 # relish-notifier
 
-A Python app using Selenium that tells me when Relish is here without having to download another app or give them my phone number or whatever.
+A Python app that uses Selenium to tell you when your Relish order has arrived.
+
+## Usage
+
+```
+usage: notifier.py [-h] [--headless] [--no-headless] [--extensions]
+                   [--no-extensions] [--page-timeout PAGE_TIMEOUT]
+                   [--check-interval INTERVAL] [--once] [--verbose]
+                   [--command COMMAND]
+
+options:
+  -h, --help            show this help message and exit
+  --headless            Run Chrome in headless mode (default)
+  --no-headless         Do not run Chrome in headless mode (show browser
+                        window)
+  --extensions          Enable browser extensions
+  --no-extensions       Disable browser extensions
+  --page-timeout, -t PAGE_TIMEOUT
+                        Set page timeout in seconds
+  --check-interval, -i INTERVAL
+                        How often to check for delivery
+  --once                Check once and exit
+  --verbose, -v
+  --command, -c COMMAND
+                        Run this command when your order has arrived
+```
 
 ## Relish credentials
 
-Credentials are stored in [keyring](https://github.com/jaraco/keyring) and can be set via the following:
+Credentials are stored in the system keyring and can be set via the following:
 
 ```bash
 $ python
